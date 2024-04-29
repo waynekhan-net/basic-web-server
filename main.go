@@ -13,5 +13,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", handler) // Register the handler for the root path
 	fmt.Println("Server starting on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil)) // Start the server
+
+	listenAddress := "192.168.0.101:8080"
+	log.Fatal(http.ListenAndServe(listenAddress, nil)) // Start the server
 }
