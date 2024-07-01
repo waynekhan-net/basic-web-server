@@ -17,3 +17,7 @@ func main() {
 	listenAddress := "192.168.0.101:8080"
 	log.Fatal(http.ListenAndServe(listenAddress, nil)) // Start the server
 }
+
+func rename(name string) {
+  name = name  // Noncompliant
+}
