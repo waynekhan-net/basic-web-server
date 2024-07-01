@@ -21,3 +21,8 @@ func main() {
 func rename(name string) {
   name = name  // Noncompliant
 }
+
+func add(x, y int) int {
+	return x + y // Noncompliant
+	z := x + y // dead code
+}
