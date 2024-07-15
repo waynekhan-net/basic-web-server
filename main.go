@@ -2,27 +2,29 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
-// A simple handler function
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.Error(w, "404 not found.", http.StatusNotFound)
+		return
+	}
+
+	if r.Method != "GET" {
+		http.Error(w, "Method is not supported.", http.StatusNotFound)
+		return
+	}
+
+	fmt.Fprintf(w, "Hello, World!")
 }
 
 func main() {
-	http.HandleFunc("/", handler) // Register the handler for the root path
+	http.HandleFunc("/", helloHandler)
+
 	fmt.Println("Server starting on port 8080")
-
-	listenAddress := "192.168.0.101:8080"
-	log.Fatal(http.ListenAndServe(listenAddress, nil)) // Start the server
-}
-
-func rename(name string) {
-  name = name  // Noncompliant
-}
-
-func add(x, y int) int {
-	return x + y // Noncompliant
-	z := x + y // dead code
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
